@@ -1,0 +1,1 @@
+package wds.beans.binance.deserialize;

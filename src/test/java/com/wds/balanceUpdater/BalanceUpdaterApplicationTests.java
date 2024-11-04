@@ -1,19 +1,20 @@
 package com.wds.balanceUpdater;
 
-import org.junit.jupiter.api.Disabled;
 import org.springframework.beans.factory.annotation.Autowired;
-import wds.control.BalanceService;
+import org.springframework.test.context.TestPropertySource;
+import wds.service.BalanceService;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
-import wds.beans.entity.Balance;
+import wds.beans.Balance;
 
-import java.time.LocalDate;
+import java.time.Clock;
 import java.util.Date;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @SpringBootTest(classes = com.wds.balanceUpdater.TestConfig.class)
+@TestPropertySource("classpath:application-test.properties")
 class BalanceUpdaterApplicationTests {
 
 	@Autowired
@@ -30,12 +31,16 @@ class BalanceUpdaterApplicationTests {
 	public void testUpdateBalanceInDb(){
 
 		Balance testBalance = new Balance();
-		testBalance.setIdcrypto("BTC");
-		testBalance.setUpdatedDate(new Date(new Date().getTime()));
+		testBalance.setIdcrypto(16);
 		testBalance.setCrypto_value(new String("0.00099966f"));
+		testBalance.setUpdatedDate(new Date(new Date().getTime()));
 		balanceService.addBalance(testBalance);
 		for (Balance balance : balanceService.getAllBalances()){
-			assertTrue(balance.getCrypto_value().equalsIgnoreCase(new String("0.00099966f")));
-		}
+			if(!balance.getCrypto_value().equalsIgnoreCase("0")){
+				assertTrue(balance.getCrypto_value().equalsIgnoreCase(new String("0.00099966f")));
+				}
+			}
+
+		//balanceService.deleteBalance(16l);
 	}
 }

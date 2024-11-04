@@ -8,8 +8,8 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 @Configuration
 @EnableAutoConfiguration()
-@ComponentScan({"wds.control"})
-@EnableJpaRepositories({"wds.control.repo"})
+@ComponentScan({"wds.service","wds.controller","wds.exception"})
+@EnableJpaRepositories({"wds.repository"})
 @EntityScan("wds.beans.entity")
 
 public class TestConfig {
